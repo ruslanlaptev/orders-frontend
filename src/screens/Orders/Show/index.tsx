@@ -18,8 +18,9 @@ const OrdersShow = observer(
     const { id } = useParams<ShowParams>();
 
     useEffect(() => {
-      state.loadOrder(id);
-    }, []);
+      if (state.initialized) return;
+      state.initialize(id);
+    });
 
     return (
       <div className={styles.screenWrapper}>

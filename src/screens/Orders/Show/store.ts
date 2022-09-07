@@ -7,6 +7,7 @@ export default class OrdersShowStore {
   order: SingleOrder | null = null;
   id: string | null = null;
   loading: boolean = false;
+  initialized: boolean = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -34,5 +35,11 @@ export default class OrdersShowStore {
       console.error(error);
     }
     this.loading = false;
+  }
+
+  initialize(id: string) {
+    if (this.initialized) return;
+    this.initialized = true;
+    this.loadOrder(id);
   }
 }
