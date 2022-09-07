@@ -42,7 +42,7 @@ const OrdersShow = observer(
 
               <div className={styles.items}>
                 {state.order?.items.map((item) => (
-                  <Item item={item} />
+                  <Item item={item} key={item.id} />
                 ))}
               </div>
             </>

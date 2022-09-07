@@ -46,14 +46,14 @@ export default class OrdersListState {
   nextPage(): void {
     if (this.page >= this.totalPages) return;
     this.setPage(this.page + 1);
-    this.loading = true;
+    this.startLoading();
     this.loadOrders();
   }
 
   prevPage(): void {
     if (this.page <= 1) return;
     this.setPage(this.page - 1);
-    this.loading = true;
+    this.startLoading();
     this.loadOrders();
   }
 
@@ -70,7 +70,7 @@ export default class OrdersListState {
   }
 
   async loadOrders() {
-    this.loading = true;
+    this.startLoading();
     try {
       await client
         .query(GET_ORDERS_QUERY, { page: this.page })
@@ -82,8 +82,7 @@ export default class OrdersListState {
     } catch (error) {
       console.error(error);
     }
-
-    this.loading = false;
+    this.stopLoading();
   }
 
   initialize() {

@@ -21,8 +21,16 @@ export default class OrdersShowStore {
     this.order = order;
   }
 
-  async loadOrder(id: string) {
+  startLoading() {
     this.loading = true;
+  }
+
+  stopLoading() {
+    this.loading = false;
+  }
+
+  async loadOrder(id: string) {
+    this.startLoading();
     try {
       await client
         .query(ORDER_QUERY, { number: id })
@@ -34,7 +42,7 @@ export default class OrdersShowStore {
     } catch (error) {
       console.error(error);
     }
-    this.loading = false;
+    this.stopLoading();
   }
 
   initialize(id: string) {
