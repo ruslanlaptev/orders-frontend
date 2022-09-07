@@ -1,8 +1,8 @@
-import { makeAutoObservable } from "mobx";
-import { OrdersListItem } from "./types";
-import { createBrowserHistory, History } from "history";
-import client from "api/gql";
-import { GET_ORDERS_QUERY } from "~/screens/Orders/List/queries";
+import { makeAutoObservable } from 'mobx';
+import { OrdersListItem } from './types';
+import { createBrowserHistory, History } from 'history';
+import client from 'api/gql';
+import { GET_ORDERS_QUERY } from '~/screens/Orders/List/queries';
 
 export default class OrdersListState {
   initialized = false;
@@ -16,8 +16,9 @@ export default class OrdersListState {
     this.initialized = val;
   }
 
-  constructor() {
+  constructor(page: number = 1) {
     makeAutoObservable(this);
+    this.page = page;
     this.history = createBrowserHistory();
   }
 
@@ -36,8 +37,8 @@ export default class OrdersListState {
   setPage(page: number): void {
     this.page = page;
     const url = new URL(window.location.href);
-    if (url.searchParams.get("page") !== this.page.toString()) {
-      url.searchParams.set("page", "" + this.page);
+    if (url.searchParams.get('page') !== this.page.toString()) {
+      url.searchParams.set('page', '' + this.page);
       this.history.replace(url.pathname + url.search, {});
     }
   }
@@ -70,6 +71,18 @@ export default class OrdersListState {
 
   async loadOrders() {
     this.loading = true;
+    try {
+      await client
+        .query(GET_ORDERS_QUERY, { page: this.page })
+        .toPromise()
+        .then((result) => {
+          this.setOrders(result.data.getOrders.orders);
+          this.setTotalPages(result.data.getOrders.pagination.totalPageCount);
+        });
+    } catch (error) {
+      console.error(error);
+    }
+
     this.loading = false;
   }
 

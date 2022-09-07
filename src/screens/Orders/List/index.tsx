@@ -1,18 +1,19 @@
-import React, { useEffect } from "react";
-import styles from "./styles.m.styl";
-import { map } from "lodash";
-import { observer } from "mobx-react-lite";
-import OrdersListState from "./store";
-import { OrdersListItem } from "./types";
-
-import Button from "../../../components/Button";
-import AngleLeftIcon from "../../../assets/icons/angle-left-solid.svg";
-import AngleRightIcon from "~/assets/icons/angle-right-solid.svg";
-import ListItem from "./components/ListItem";
+import React, { useEffect } from 'react';
+import styles from './styles.m.styl';
+import { map } from 'lodash';
+import { observer } from 'mobx-react-lite';
+import OrdersListState from './store';
+import { OrdersListItem } from './types';
+import usePage from './hooks/usePage';
+import Button from '../../../components/Button';
+import AngleLeftIcon from '../../../assets/icons/angle-left-solid.svg';
+import AngleRightIcon from '~/assets/icons/angle-right-solid.svg';
+import ListItem from './components/ListItem';
 
 const OrdersList = observer(
   (): JSX.Element => {
-    const [state] = React.useState(new OrdersListState());
+    const page = usePage();
+    const [state] = React.useState(new OrdersListState(page));
 
     useEffect(() => {
       if (state.initialized) return;
@@ -45,7 +46,7 @@ const OrdersList = observer(
             <div className={styles.pagination}>
               <Button
                 small
-                text="PREV"
+                text='PREV'
                 icon={AngleLeftIcon}
                 resting
                 disabled={!state.canPrev}
@@ -53,7 +54,7 @@ const OrdersList = observer(
               />
               <Button
                 small
-                text="NEXT"
+                text='NEXT'
                 rightIcon={AngleRightIcon}
                 resting
                 disabled={!state.canNext}
