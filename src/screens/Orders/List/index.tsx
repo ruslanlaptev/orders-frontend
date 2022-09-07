@@ -9,6 +9,7 @@ import Button from '../../../components/Button';
 import AngleLeftIcon from '../../../assets/icons/angle-left-solid.svg';
 import AngleRightIcon from '~/assets/icons/angle-right-solid.svg';
 import ListItem from './components/ListItem';
+import Loader from '~/components/Loader';
 
 const OrdersList = observer(
   (): JSX.Element => {
@@ -24,19 +25,19 @@ const OrdersList = observer(
       <React.Fragment>
         <div className={styles.screenWrapper}>
           <div className={styles.screen}>
-            {state.loading && <span>Loading...</span>}
+            {state.loading && <Loader />}
             {!state.loading && (
               <div className={styles.table}>
                 <div className={styles.head}>
                   <div className={styles.row}>
-                    <div>Номер</div>
-                    <div>Создан</div>
-                    <div>Доставка</div>
-                    <div>В работе</div>
-                    <div>Статус</div>
+                    <div className={styles.headCell}>Номер</div>
+                    <div className={styles.headCell}>Создан</div>
+                    <div className={styles.headCell}>Доставка</div>
+                    <div className={styles.headCell}>В работе</div>
+                    <div className={styles.headCell}>Статус</div>
                   </div>
                 </div>
-                <div className={styles.body}>
+                <div>
                   {map(state.orders, (order: OrdersListItem, index: number) => (
                     <ListItem order={order} key={index} />
                   ))}

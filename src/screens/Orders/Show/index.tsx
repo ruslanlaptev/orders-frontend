@@ -3,6 +3,10 @@ import OrdersShowStore from './store';
 import { observer } from 'mobx-react-lite';
 import { useParams } from 'react-router-dom';
 import styles from './styles.m.styl';
+import Item from './components/Item';
+import Loader from '~/components/Loader';
+import OrderStatus from '~/components/OrderStatus';
+import DeliveryType from '~/components/DeliveryType';
 
 type ShowParams = {
   id: string;
@@ -20,10 +24,28 @@ const OrdersShow = observer(
     return (
       <div className={styles.screenWrapper}>
         <div className={styles.screen}>
-          <div className={styles.items}>
-            <div>Number: {state.order?.number}</div>
-            <div>Status: {state.order?.status}</div>
-          </div>
+          {state.loading && <Loader />}
+          {!state.loading && (
+            <>
+              <div className={styles.title}>Order {state.order?.number}</div>
+
+              <div className={styles.orderInfo}>
+                <div>
+                  Status: <OrderStatus code={state.order?.status ?? ''} />
+                </div>
+                <div>
+                  Delivery code:{' '}
+                  <DeliveryType code={state.order?.delivery.code ?? ''} />
+                </div>
+              </div>
+
+              <div className={styles.items}>
+                {state.order?.items.map((item) => (
+                  <Item item={item} />
+                ))}
+              </div>
+            </>
+          )}
         </div>
       </div>
     );

@@ -1,12 +1,6 @@
 declare namespace StylesMStylNamespace {
   export interface IStylesMStyl {
-    head: string;
-    headCell: string;
-    pagination: string;
-    row: string;
-    screen: string;
-    screenWrapper: string;
-    table: string;
+    component: string;
   }
 }
 

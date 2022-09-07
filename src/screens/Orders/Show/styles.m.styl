@@ -2,11 +2,37 @@
 
 .screenWrapper
   padding 28px
+  flex-grow 1
 
 .screen
   background white
   coolScrollbar()
+  padding 28px
 
+.title
+  padding 28px
+  background alpha($primary, 10%)
+  border-radius 8px
+  color $primary
+  font-weight bold
+
+.orderInfo 
+  div 
+    padding 1rem
+    border-bottom 1px solid $background
+    display flex
+    align-items center
+
+    div 
+      margin 0 0.5rem
 
 .items
   display block
+
+@media only screen and (max-width: 860px) 
+  .screenWrapper
+    padding 0
+
+  .screen
+    padding 0
+  

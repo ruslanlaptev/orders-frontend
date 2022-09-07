@@ -1,22 +1,53 @@
 @import '../../../common.styl'
 
 .screenWrapper
-  background $yellow
+  padding 28px
+  flex-grow 1
 
 .screen
   background white
+  coolScrollbar()
 
 .table
-  opacity 1
+  padding 28px
 
 .head
-  opacity 1
-
+  text-align: center
+  
 .row
-  display flex
+  min-height 64px
+  display grid
+  grid-template-columns repeat(5, 1fr)
+  grid-column-gap 0.5rem
 
-.body
-  opacity 1
+.headCell
+  display flex
+  align-items center
+  justify-content center
+  background alpha($primary, 10%)
+  border-radius 8px
+  color $primary
+  font-weight bold
+  word-break break-all
 
 .pagination
-  opacity 1
+  display flex
+  justify-content space-between
+  padding 28px
+  padding-top 0
+  
+@media only screen and (max-width: 860px) 
+  .screenWrapper
+    padding 0
+
+  .table
+    padding 0
+  
+  .row
+    grid-column-gap 0.1rem
+
+  .headCell
+    font-size 0.75rem
+
+  .pagination
+    padding 14px
